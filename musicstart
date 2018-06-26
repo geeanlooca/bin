@@ -1,0 +1,4 @@
+#!/bin/bash
+
+[[ -z $(pgrep -xU $UID mpdscribble) ]] && mpdscribble &
+[[ -z $(pgrep -xU $UID mpd) ]] && mpd &
