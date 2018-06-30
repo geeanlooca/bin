@@ -35,5 +35,5 @@ case $string in
 esac
 
         
-firefox $URL
+firefox "${URL}"
 i3-msg "[class=Firefox] focus"
