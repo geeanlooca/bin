@@ -5,7 +5,6 @@ if [[ -z $(pgrep -xU $UID ncmpcpp) ]]; then
     # i3-msg "[window_role=ncmpcpp] floating enable"
 else
     RESULT=$(i3-msg "[window_role=ncmpcpp] scratchpad show")
-    notify-send $RESULT
     if [[ "$RESULT" = *"false"* ]]; then
         # send to scratchpad
         i3-msg "[window_role=ncmpcpp] move scratchpad"
