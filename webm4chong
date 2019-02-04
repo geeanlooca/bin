@@ -1,0 +1,3 @@
+#!/bin/bash
+echo $1
+ffmpeg -i "$1" -c:v libvpx -crf 12 -b:v 500K -an -threads 4 OUTPUT.webm > /dev/null
