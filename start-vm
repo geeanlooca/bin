@@ -1,0 +1,30 @@
+#!/bin/bash
+
+VM=$1
+
+# if an argument is not passed, use rofi to query the user
+if [[ -z "$VM" ]]; then
+
+    # get the selected virtual machine
+    chosen=$(VBoxManage list vms | rofi -dmenu)
+
+    # check if the user selected one of the entries or canceled the operation
+    if [[ -n $chosen ]]; then
+        result=$(echo $chosen | cut -d '"' -f2)
+        echo $result
+    else
+        exit 0
+    fi
+else
+    # check if the passed argument is in the list of available virtual machines
+    result=$(VBoxManage list vms | cut -d '"' -f2 | grep -w $VM)
+fi
+
+# validate the input
+if [[ -z $result ]]; then
+    echo "VM name not valid"
+    exit 1
+fi
+
+# start the virtual machine
+VBoxManage startvm "${result}" --type gui
