@@ -5,7 +5,7 @@ RESULT=$(i3-msg -t get_tree | grep dropdown)
 
 if [ -z "$RESULT" ]; then
     echo "No dropdown"
-    gnome-terminal --role=dropdown -- tmux
+    gnome-terminal --role=dropdown
     i3-msg "[window_role=dropdown] move scratchpad"
     i3-msg "[window_role=dropdown] scratchpad show"
 else

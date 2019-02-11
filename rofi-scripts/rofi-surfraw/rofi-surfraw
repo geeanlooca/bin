@@ -1,7 +1,8 @@
 #!/bin/bash
+default=google
 
 # source surfraw config
-source $HOME/.surfraw.conf
+source $HOME/.config/rofi-surfraw/searchengines
 
 $SURFRAW_graphical_browser=firefox
 

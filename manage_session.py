@@ -15,10 +15,10 @@ ps = Popen(('echo', "Lock\nLogout\nShutdown\nReboot"), stdout=PIPE)
 output = check_output(('rofi', '-dmenu'), stdin=ps.stdout).strip().decode('utf-8')
 
 diction = { 
-        'Lock' : '~/bin/locker',
+        'Lock' : '~/bin/screenlocker/lockscreen',
         'Logout' : 'i3-msg exit',
         'Reboot' : 'systemctl reboot',
-        'Shutdown' : 'systemctl poweroff'
+        'Shutdown' : 'systemctl poweroff -i'
 }
 
 cmd_string = diction.get(output, 'i3-msg-exit')
