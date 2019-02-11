@@ -1,0 +1,24 @@
+#!/bin/bash
+
+~/bin/musicstart
+
+str=""
+if [[ "$(mpc status | grep playing )" ]]; then 
+    str=" $(mpc status | head -n 1)"; 
+elif [[ "$(mpc status | grep paused )" ]]; then 
+    str=" $(mpc status | head -n 1)"; 
+fi
+
+trimlimit=45
+if [ ${#str} -ge $trimlimit ]; then
+    str="$(echo $str | cut -c 1-$trimlimit) ..."
+fi
+echo $str
+
+case $BLOCK_BUTTON in
+    1) mpc toggle > /dev/null;;
+    3) ~/bin/musicplayerhandler.sh > /dev/null;;
+    4) mpc volume +5 > /dev/null;;
+    5) mpc volume -5 > /dev/null;;
+    *) mpc status > /dev/null;;
+esac

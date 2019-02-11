@@ -1,0 +1,14 @@
+#!/bin/bash
+count=$(ps -e | grep i3mpd | wc -l)
+
+echo Number of instances: ${count}
+
+if [[  $count > 2  ]]; then
+    echo 'More than one instance'
+    exit
+fi
+
+while : ; do
+	mpc idle > /dev/null
+	pkill -RTMIN+10 i3blocks ;
+done
