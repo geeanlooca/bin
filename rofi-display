@@ -1,0 +1,6 @@
+#!/bin/bash
+
+config=$(autorandr | awk '{print $1}' | rofi -dmenu)
+
+autorandr -l $config
+
