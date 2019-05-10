@@ -1,0 +1,42 @@
+#!/bin/bash
+
+dir=$1
+
+selected=$(fd . "$1" | rofi -dmenu -i -p "Search for files" -fullscreen)
+
+
+if [[ -z $selected ]]; then
+    exit
+fi
+lastchar="${selected: -1}"
+
+if [[ $lastchar == "+" ]] ; then 
+
+    selected=${selected: : -1}
+
+    # if [[ -d $selected ]]; then
+    #     selected="$(dirname "$selected")"
+    # fi
+    # show in file manager
+
+    dolphin "$selected"
+
+elif [[ $lastchar == "<" ]]; then
+    selected=${selected: : -1}
+    if [[ -d $selected ]]; then
+        parent=$selected
+    else
+        parent="$(dirname "$selected")"
+        echo $parent
+    fi
+    dolphin "$parent"
+elif [[ $lastchar == ">" ]]; then
+    # copy path to clipboard
+    selected=${selected: : -1}
+    echo $selected | xsel -i
+elif [[ $lastchar == "@" ]]; then
+    # copy to clipboard
+    xsel -b < "$selected"
+else
+    xdg-open "$selected"
+fi
