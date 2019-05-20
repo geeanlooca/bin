@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+    1) playerctl previous ;;
+    2) playerctl play-pause ;;
+    3) playerctl next ;;
+    4) pactl set-sink-volume 0 +5% ;;
+    5) pactl set-sink-volume 0 -5% ;;
+esac
+
+
+status=$(playerctl status)
+case "$status" in
+    "Paused") echo 'Paused' ;;
+    "Playing")
+        artist=$(playerctl metadata artist)
+        title=$(playerctl metadata title)
+        echo "$artist - $title"
+        ;;
+esac
+
+
