@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# perform a Google search on the content of the clipboard
+
+SEARCH=$(xclip -o)
+echo $SEARCH
+URL="https://www.google.com/search?q=${SEARCH}"
+echo $URL
+firefox "$URL"
+

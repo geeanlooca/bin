@@ -1,8 +1,12 @@
 #!/bin/bash
 
-dir=$1
+if [ -z "$1" ]; then
+    dir=/home/$USER
+else
+    dir=$1
+fi
 
-selected=$(fd . "$1" | rofi -dmenu -i -p "Search for files" -fullscreen)
+selected=$(fd . "$dir" | rofi -dmenu -i -p "Search for files" -fullscreen)
 
 
 if [[ -z $selected ]]; then
@@ -11,32 +15,27 @@ fi
 lastchar="${selected: -1}"
 
 if [[ $lastchar == "+" ]] ; then 
-
+    # remove the trailing character
     selected=${selected: : -1}
 
-    # if [[ -d $selected ]]; then
-    #     selected="$(dirname "$selected")"
-    # fi
-    # show in file manager
-
-    dolphin "$selected"
+    # show the selected file in the file manager
+    dolphin --select "$selected"
 
 elif [[ $lastchar == "<" ]]; then
-    selected=${selected: : -1}
-    if [[ -d $selected ]]; then
-        parent=$selected
-    else
-        parent="$(dirname "$selected")"
-        echo $parent
-    fi
-    dolphin "$parent"
-elif [[ $lastchar == ">" ]]; then
     # copy path to clipboard
     selected=${selected: : -1}
-    echo $selected | xsel -i
+    echo "$selected" |  xclip -sel clip
+
 elif [[ $lastchar == "@" ]]; then
+    selected=${selected: : -1}
     # copy to clipboard
     xsel -b < "$selected"
 else
-    xdg-open "$selected"
+    if [ -d "$selected" ]; then
+        # if it's a directory, open it with dolphin
+        dolphin "$selected"
+    else
+        # otherwise use the default application
+        xdg-open "$selected"
+    fi
 fi

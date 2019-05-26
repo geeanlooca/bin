@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# start spotify if it is not running
+
+if pgrep -x "spotify" >/dev/null
+then
+# toggle music reproduction
+    playerctl -p spotify play-pause
+else
+    spotify &
+fi
+
+# send a signal to i3 blocklets
+pkill -RTMIN+10 i3blocks
+

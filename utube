@@ -14,25 +14,20 @@ if [ -z "$URL" ]; then
     exit 1
 fi
 
-if [ $2 ];
-then
-    QUALITY=$2
-else
-    QUALITY=$(echo -e "480\\n720\\n1080" | rofi -lines 3 -dmenu -p "Select video quality")
-    if [ -z "$QUALITY" ]; then
-        exit 1
-    fi
-
-    echo "Quality set to $QUALITY"
-fi
-
-
 title=$(youtube-dl $URL --skip-download --get-title)
 
 if [ -z "$title" ]; then
     notify-send "Invalid URL"
     exit 1
 fi
+
+QUALITY=$(echo -e "480\\n720\\n1080" | rofi -lines 3 -dmenu -p "Select video quality")
+if [ -z "$QUALITY" ]; then
+    exit 1
+fi
+
+echo "Quality set to $QUALITY"
+
 
 notify-send "Opening YouTube video: $title"
 mpv --ytdl-format="bestvideo[ext=mp4][height<=?${QUALITY}]+bestaudio[ext=m4a]" $URL --really-quiet  &

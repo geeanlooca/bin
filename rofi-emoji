@@ -1722,6 +1722,6 @@ read -r -d '' VAR << EOM
 EOM
 
 
-selected="$( echo "$VAR" | rofi -dmenu -i | cut -f1 -d" ")"
+selected=$( echo -e "$VAR" | rofi -dmenu | cut -f1 -d" ")
 echo -n "$selected" | xclip -selection c
 xdotool key ctrl+v

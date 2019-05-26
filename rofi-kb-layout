@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Ask for a keyboard layout
+layout=$(echo -e "Italian - it\nEnglish (US) - us" | rofi -dmenu -lines 2 -p "Select keyboard layout" | cut -d- -f2)
+
+if [ ! -z "$layout" ]; then
+    setxkbmap "$layout"
+fi
+
+# remap CapsLock to Ctrl/Escape
+$HOME/bin/caps_ctrlescape

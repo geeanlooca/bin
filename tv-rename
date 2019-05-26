@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# $1 is the source directory
+# $2 is the destination
+
+if [ ! -d "$1" ]; then
+    echo "$1 is not a valid directory."
+    exit 1
+fi
+
+if [ ! -d "$2" ]; then
+    echo "$2 is not a valid directory."
+    exit 1
+fi
+
+filebot -rename "$1" --format "$2/{n}/Season {s.pad(2)}/{n} - {S00E00}" -non-strict
+
+

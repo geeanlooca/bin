@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+   elvi=google
+else
+   elvi=$1
+fi
+
+content=$(xclip -o)
+surfraw $elvi "$content"
