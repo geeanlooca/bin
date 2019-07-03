@@ -1,0 +1,9 @@
+#!/bin/sh
+
+id=$(wmctrl -l | grep -oP "(?<=)(0x\w+)(?=.*Firefox)") 
+xdotool key --window $id "ctrl+l"
+sleep 0.3
+xdotool key --window $id "ctrl+c"
+
+url=$(xclip -out -selection clipboard)
+echo $url

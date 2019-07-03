@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ ! -z "$1" ]; then
+    setxkbmap "$1"
+fi
+
+# remap CapsLock to Ctrl/Escape
+$HOME/bin/caps_ctrlescape

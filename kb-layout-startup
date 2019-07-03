@@ -1,0 +1,28 @@
+#!/bin/sh
+
+log_file="$HOME/.switch-kb-layout.log"
+kb_file=$HOME/.config/keyboard-layouts
+devices=$(lsusb)
+foundone=false
+
+while read line; do
+  kb=$(echo $line | cut -d" " -f1)
+  layout=$(echo $line | cut -d" " -f2)
+  found=$(echo $devices | grep $kb)
+
+  if [ -z "$found" ]; then
+      echo "$kb ($layout)  not connected" >> $log_file;
+  else
+      echo "$kb ($layout) connected" >> $log_file;
+      $HOME/bin/kb-layout "$layout"
+      foundone=true
+      break
+  fi
+done < $kb_file
+
+if [ "$foundone" = false ]; then
+    echo "no keyboard connected. Setting default layout (it)" | tee $log_file
+    # set default layout
+    $HOME/bin/kb-layout "it"
+fi
+

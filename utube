@@ -5,7 +5,9 @@ if [ $1 ];
 then
     URL=$1
 else
-    URL=`xclip -selection c -o`
+    # URL=`xclip -selection c -o`
+
+    URL=$(current-url)
     echo $URL
 fi
 
@@ -21,14 +23,13 @@ if [ -z "$title" ]; then
     exit 1
 fi
 
+notify-send "Opening YouTube video: $title"
+
 QUALITY=$(echo -e "480\\n720\\n1080" | rofi -lines 3 -dmenu -p "Select video quality")
 if [ -z "$QUALITY" ]; then
     exit 1
 fi
 
 echo "Quality set to $QUALITY"
-
-
-notify-send "Opening YouTube video: $title"
-mpv --ytdl-format="bestvideo[ext=mp4][height<=?${QUALITY}]+bestaudio[ext=m4a]" $URL --really-quiet  &
+mpv --ytdl-format="bestvideo[ext=mp4][height<=?${QUALITY}]+bestaudio[ext=m4a]" "$URL" --really-quiet  &
 disown
